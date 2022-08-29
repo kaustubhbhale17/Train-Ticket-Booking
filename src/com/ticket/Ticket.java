@@ -7,35 +7,41 @@ import com.train.Train;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
+
 
 
 public class Ticket {
 	
-	private static int counter=100;
+	private static int counter=99;
 	private String pnr;
 	private Date travelDate;
-	private TreeMap<Passenger,Double> passengers;
+	private static HashMap<Passenger,Double> passengers = new HashMap<>();
+	private Train train;
 
-	Train train = new Train();
 	
 	public Ticket(Date travelDate,Train train) {
 		this.travelDate=travelDate;
 		this.train=train;
 		counter++;
 	}
+	
+	
+	@SuppressWarnings("deprecation")
 	public String generatePNR() {
 		String source = train.getSource();
 		String destination = train.getDestination();
-		@SuppressWarnings("deprecation")
+		
 		int year= travelDate.getYear();
-		@SuppressWarnings("deprecation")
 		int month = travelDate.getMonth();
-		@SuppressWarnings("deprecation")
 		int date = travelDate.getDate();
 		
-		pnr = source.charAt(0)+destination.charAt(0)+"_"+year+month+date+"_"+counter;
+		//System.out.println((char)source.charAt(0)+(char)destination.charAt(0));
+		char src = source.charAt(0); 
+		char dest = destination.charAt(0);
+		StringBuilder sb = new StringBuilder();
+		pnr = sb.append(src).append(dest).append("_").append(year).append(month).append(date).append("_").append(counter).toString();
 		
 		return pnr;
 	}
@@ -50,7 +56,7 @@ public class Ticket {
 		}
 		else if(p.getGender()=='F')
 			return train.getTicket_price()*0.25;
-		return 0;
+		return train.getTicket_price();
 	}
 	
 	public void addPassenger(String name,int age,char gender){
@@ -67,27 +73,33 @@ public class Ticket {
 		return total;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public StringBuilder generateTicket() {
-		
+		//generate a file with name PNR no and copy below contents inside file.
 		StringBuilder sb = new StringBuilder();
 		
 		String pnr = generatePNR();
-		int trainNo=train.getTrainNo();
+		int trainNo = train.getTrainNo();
 		String trainName=train.getTrainName();
 		String from = train.getSource();
-		String destination = train.getDestination();
-		Date date = travelDate;
+		String to = train.getDestination();
 		
-		sb.append(pnr+"\n"+trainNo+"\n"+trainName+"\n"+from+"\n"+destination+"\n"+date);
+		String date= String.valueOf(travelDate.getDate());
+		String month = String.valueOf(travelDate.getMonth()+1);
+		String year=String.valueOf(travelDate.getYear()+1900);
+		String newDate = date+"/"+month+"/"+year;
 		
-		int noOfPassengers = passengers.size();
-		sb.append("\nPassenger :"+noOfPassengers);
-		sb.append("Name\t"+"Age\t"+"Gender\t"+"Fair");
+		sb.append("\nPNR\t\t\t:\t"+pnr+"\nTrainNo\t\t\t:\t"+trainNo+"\nTrain Name\t\t:\t"+trainName+"\nFrom\t\t\t:\t"+from+"\nTo\t\t\t:\t"+to+"\nTravel Date\t\t:\t"+newDate);
+		sb.append("\n\nPassengers:\n");
+		sb.append("---------------------------------------------------------\n");
+		sb.append("Name\t\tAge\t\tGender\t\tFair\n");
+		sb.append("---------------------------------------------------------\n");
 		for(Map.Entry<Passenger,Double> entry : passengers.entrySet()) {
-			
 			Passenger p = entry.getKey();
-			sb.append(p.getName()+"\t"+p.getAge()+"\t"+p.getGender()+"\t"+entry.getValue()+"\n");
+			sb.append(p.getName()+"\t\t"+p.getAge()+"\t\t"+p.getGender()+"\t\t"+entry.getValue()+"\n");
 		}
+		
+		sb.append("\nTotal Price: "+calculateTotalTicketPrice());
 		return sb;
 		
 	}

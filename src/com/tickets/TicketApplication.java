@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 import com.train.Train;
-import com.ticket.*;
+import com.ticket.Ticket;
 
 public class TicketApplication {
 
@@ -24,16 +24,18 @@ public class TicketApplication {
 			System.exit(0);
 		}
 		
-		System.out.println("Enter travel date ");
+		System.out.println("Enter Travel Date ");
 		String sdate = scannerText.nextLine();
-		Date date2=new SimpleDateFormat("dd-MM-yyyy").parse(sdate);  
-		if(date2.compareTo(new Date())<0) {
+		Date travelDate = new SimpleDateFormat("dd-MM-yyyy").parse(sdate); 
+
+		if(travelDate.compareTo(new Date())<0) {
 			System.out.println("Travel Date is before current date");
 			System.exit(0);
 		}
 		
 		System.out.println("Enter the number of passengers ");
 		int numberOfPassengers = scannerNumber.nextInt();
+		
 		do {
 			System.out.println("Enter Passenger Name ");
 			String name = scannerText.nextLine();
@@ -42,13 +44,16 @@ public class TicketApplication {
 			System.out.println("Enter Gender(M/F) ");
 			char gender = scannerNumber.next().charAt(0);
 			
-			ticket = new Ticket(date2,train);
+			ticket = new Ticket(travelDate,train);
 			ticket.addPassenger(name, age, gender);
 			
 			numberOfPassengers--;
+			
 		}while(numberOfPassengers!=0);
 		
+		System.out.println("Ticket Booked with PNR : "+ticket.generatePNR()+"\n");
 		System.out.println(ticket.generateTicket());
+		
 		
 		scannerNumber.close();
 		scannerText.close();
