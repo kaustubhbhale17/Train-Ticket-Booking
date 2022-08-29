@@ -1,4 +1,4 @@
-package com.tickets;
+package com.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

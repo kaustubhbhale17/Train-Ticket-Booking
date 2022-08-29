@@ -1,4 +1,4 @@
-package com.tickets;
+package com.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
