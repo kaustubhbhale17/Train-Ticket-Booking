@@ -89,7 +89,7 @@ public class Ticket {
 		String year=String.valueOf(travelDate.getYear()+1900);
 		String newDate = date+"/"+month+"/"+year;
 		
-		sb.append("\nPNR\t\t\t:\t"+pnr+"\nTrainNo\t\t\t:\t"+trainNo+"\nTrain Name\t\t:\t"+trainName+"\nFrom\t\t\t:\t"+from+"\nTo\t\t\t:\t"+to+"\nTravel Date\t\t:\t"+newDate);
+		sb.append("\nPNR\t\t\t\t:\t"+pnr+"\nTrainNo\t\t\t:\t"+trainNo+"\nTrain Name\t\t:\t"+trainName+"\nFrom\t\t\t:\t"+from+"\nTo\t\t\t\t:\t"+to+"\nTravel Date\t\t:\t"+newDate);
 		sb.append("\n\nPassengers:\n");
 		sb.append("---------------------------------------------------------\n");
 		sb.append("Name\t\tAge\t\tGender\t\tFair\n");
@@ -105,22 +105,17 @@ public class Ticket {
 	}
 	
 	public void writeTicket() {
-		FileWriter f = null;
+		//create a file with PNR number 
+		StringBuilder s = generateTicket();
 		try {
-			f = new FileWriter("tickets.txt");
-			StringBuilder sb = generateTicket();
-			f.write(sb.toString());
+			FileWriter writer = new FileWriter(generatePNR()+".txt");
+			writer.write(s.toString());
+			writer.close();
 		} catch (IOException e) {
 			
 			e.printStackTrace();
-		}finally {
-			try {
-				f.close();
-			} catch (IOException e) {
-				
-				e.printStackTrace();
-			}
-		}
+		} 
+		
 	}
 	
 	
