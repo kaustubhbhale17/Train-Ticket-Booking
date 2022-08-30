@@ -37,8 +37,8 @@ public class Ticket {
 		String source = train.getSource();
 		String destination = train.getDestination();
 		
-		int year= travelDate.getYear();
-		int month = travelDate.getMonth();
+		int year= travelDate.getYear()+1900;
+		int month = travelDate.getMonth()+1;
 		int date = travelDate.getDate();
 		
 		//System.out.println((char)source.charAt(0)+(char)destination.charAt(0));

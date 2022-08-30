@@ -26,11 +26,7 @@ public class TrainDAO {
 	        stm.setInt(1, train);
 	        
 	        ResultSet rs =stm.executeQuery();
-	        //System.out.println(rs);
-//	        if(rs.getFetchSize()<=0) {
-//	        	System.out.println("Train with given train number does not exist");
-//	        	System.exit(0);
-//	        }
+
 	        while(rs.next()) {
 	        	int trainNo = rs.getInt("TRAIN_NO");
 	        	String trainName = rs.getString("TRAIN_NAME");
