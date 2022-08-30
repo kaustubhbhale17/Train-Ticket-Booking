@@ -6,8 +6,11 @@ import com.train.Train;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -24,7 +27,7 @@ public class Ticket {
 	public Ticket(Date travelDate,Train train) {
 		this.travelDate=travelDate;
 		this.train=train;
-		counter++;
+		++counter;
 	}
 	
 	
@@ -115,6 +118,21 @@ public class Ticket {
 			
 			e.printStackTrace();
 		} 
+		
+	}
+	
+	public void sortPassengersByName() {
+		List<Passenger> list = new ArrayList<>();
+		for(Map.Entry<Passenger,Double> entry : passengers.entrySet()) {
+			list.add(entry.getKey());
+		}
+		 
+		String[] names = new String[list.size()];
+		int i=0;
+		for(Passenger p : list)
+			names[i++]=p.getName();
+		
+		Arrays.sort(names);
 		
 	}
 	
