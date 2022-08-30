@@ -17,12 +17,12 @@ import java.util.Map;
 
 public class Ticket {
 	
-	private static int counter=99;
+	private static int counter=100;
 	private String pnr;
 	private Date travelDate;
 	private static HashMap<Passenger,Double> passengers = new HashMap<>();
 	private Train train;
-
+	
 	
 	public Ticket(Date travelDate,Train train) {
 		this.travelDate=travelDate;
@@ -33,6 +33,7 @@ public class Ticket {
 	
 	@SuppressWarnings("deprecation")
 	public String generatePNR() {
+		
 		String source = train.getSource();
 		String destination = train.getDestination();
 		
@@ -51,14 +52,15 @@ public class Ticket {
 	
 	public double calculatePassengerFair(Passenger p) {
 		
-		if(p.getAge()<=12) {
+		if(p.getGender()=='F')
+			return train.getTicket_price()*0.25;
+		else if(p.getAge()<=12) {
 			return train.getTicket_price()*.50;
 		}
 		else if(p.getAge()>=60) {
 			return train.getTicket_price()*.60;
 		}
-		else if(p.getGender()=='F')
-			return train.getTicket_price()*0.25;
+		
 		return train.getTicket_price();
 	}
 	
@@ -78,7 +80,7 @@ public class Ticket {
 	
 	@SuppressWarnings("deprecation")
 	public StringBuilder generateTicket() {
-		//generate a file with name PNR no and copy below contents inside file.
+		
 		StringBuilder sb = new StringBuilder();
 		
 		String pnr = generatePNR();
@@ -90,9 +92,11 @@ public class Ticket {
 		String date= String.valueOf(travelDate.getDate());
 		String month = String.valueOf(travelDate.getMonth()+1);
 		String year=String.valueOf(travelDate.getYear()+1900);
+		
+		//for printing the date in the given format
 		String newDate = date+"/"+month+"/"+year;
 		
-		sb.append("\nPNR\t\t\t\t:\t"+pnr+"\nTrainNo\t\t\t:\t"+trainNo+"\nTrain Name\t\t:\t"+trainName+"\nFrom\t\t\t:\t"+from+"\nTo\t\t\t\t:\t"+to+"\nTravel Date\t\t:\t"+newDate);
+		sb.append("PNR\t\t\t\t:\t"+pnr+"\nTrainNo\t\t\t:\t"+trainNo+"\nTrain Name\t\t:\t"+trainName+"\nFrom\t\t\t:\t"+from+"\nTo\t\t\t\t:\t"+to+"\nTravel Date\t\t:\t"+newDate);
 		sb.append("\n\nPassengers:\n");
 		sb.append("---------------------------------------------------------\n");
 		sb.append("Name\t\tAge\t\tGender\t\tFair\n");

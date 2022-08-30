@@ -20,7 +20,7 @@ public class TrainDAO {
 		try {
 			
 	        Connection connection = DriverManager.getConnection(url, user, password);
-	        System.out.println("Connected successfully ! ");
+	        System.out.println("Database Connected successfully ! \n");
 	        String query = "select * from TRAINS where TRAIN_NO = ?";
 	        PreparedStatement stm = connection.prepareStatement(query);
 	        stm.setInt(1, train);
