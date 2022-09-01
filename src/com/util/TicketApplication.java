@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 import com.train.Train;
 import com.ticket.Ticket;
+import com.passenger.Passenger;
+import com.passenger.PassengerDAO;
 
 public class TicketApplication {
 
@@ -44,13 +46,18 @@ public class TicketApplication {
 			System.out.println("Enter Gender(M/F) ");
 			char gender = scannerNumber.next().charAt(0);
 			
+			Passenger p = new Passenger(name,age,gender);
+			PassengerDAO pdo = new PassengerDAO();
+			pdo.insertIntoPassengers(p);
+			
 			ticket = new Ticket(travelDate,train);
 			ticket.addPassenger(name, age, gender);
+			
 			
 			numberOfPassengers--;
 			
 		}while(numberOfPassengers!=0);
-		
+		ticket.insertIntoTicketTable();
 		System.out.println("Ticket Booked with PNR : "+ticket.generatePNR()+"\n");
 		ticket.writeTicket();
 		

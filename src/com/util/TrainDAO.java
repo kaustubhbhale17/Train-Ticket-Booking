@@ -1,7 +1,6 @@
 package com.util;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,16 +9,14 @@ import com.train.Train;
 
 public class TrainDAO {
 	
-	private static String url= "jdbc:mysql://localhost:3306/coreJavaCaseStudy";
-	private static String user ="root";
-	private static String password = "root";
-	
+
 	
 	public static Train findTrain(int train) {
 		Train t = null;
+		EstablishConnection ec = new EstablishConnection();
 		try {
 			
-	        Connection connection = DriverManager.getConnection(url, user, password);
+	        Connection connection = ec.getConnection();
 	        System.out.println("Database Connected successfully ! \n");
 	        String query = "select * from TRAINS where TRAIN_NO = ?";
 	        PreparedStatement stm = connection.prepareStatement(query);

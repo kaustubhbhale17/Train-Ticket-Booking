@@ -3,9 +3,13 @@ package com.ticket;
 import com.passenger.Passenger;
 import com.ticket.Ticket;
 import com.train.Train;
+import com.util.EstablishConnection;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -113,15 +117,48 @@ public class Ticket {
 	
 	public void writeTicket() {
 		//create a file with PNR number 
+		
 		StringBuilder s = generateTicket();
 		try {
 			FileWriter writer = new FileWriter(generatePNR()+".txt");
+			
 			writer.write(s.toString());
 			writer.close();
 		} catch (IOException e) {
 			
 			e.printStackTrace();
-		} 
+		}
+		 
+		
+	}
+	
+	public void insertIntoTicketTable() {
+		
+		EstablishConnection ec = new EstablishConnection();
+		Connection connection = ec.getConnection();
+		try {
+			
+			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");  
+		    String strDate = formatter.format(travelDate);  
+			
+			String query = "insert into TICKET values (?,?,?,?,?,?)";
+			PreparedStatement pstm = connection.prepareStatement(query);
+			
+			pstm.setString(1, generatePNR());
+			pstm.setInt(2, train.getTrainNo());
+			pstm.setString(3, train.getTrainName());
+			pstm.setString(4, train.getSource());
+			pstm.setString(5, train.getDestination());
+			pstm.setString(6, strDate);
+			
+			
+			pstm.executeUpdate();
+			
+			pstm.close();
+			connection.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
