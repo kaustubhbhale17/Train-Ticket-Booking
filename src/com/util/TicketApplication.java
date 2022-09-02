@@ -57,10 +57,10 @@ public class TicketApplication {
 			numberOfPassengers--;
 			
 		}while(numberOfPassengers!=0);
-		ticket.insertIntoTicketTable();
+		
 		System.out.println("Ticket Booked with PNR : "+ticket.generatePNR()+"\n");
 		ticket.writeTicket();
-		
+		ticket.insertIntoTicketTable();
 		
 		scannerNumber.close();
 		scannerText.close();

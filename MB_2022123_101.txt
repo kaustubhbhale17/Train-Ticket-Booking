@@ -1,0 +1,14 @@
+PNR				:	MB_2022123_101
+TrainNo			:	1004
+Train Name		:	Udyan Express
+From			:	Mumbai
+To				:	Bangalore
+Travel Date		:	3/12/2022
+
+Passengers:
+---------------------------------------------------------
+Name		Age		Gender		Fair
+---------------------------------------------------------
+Manish		23		M		1500.0
+
+Total Price: 1500.0

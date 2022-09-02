@@ -9,19 +9,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
 
 public class Ticket {
 	
-	private static int counter=100;
 	private String pnr;
 	private Date travelDate;
 	private static HashMap<Passenger,Double> passengers = new HashMap<>();
@@ -31,7 +28,7 @@ public class Ticket {
 	public Ticket(Date travelDate,Train train) {
 		this.travelDate=travelDate;
 		this.train=train;
-		++counter;
+
 	}
 	
 	
@@ -49,7 +46,11 @@ public class Ticket {
 		char src = source.charAt(0); 
 		char dest = destination.charAt(0);
 		StringBuilder sb = new StringBuilder();
-		pnr = sb.append(src).append(dest).append("_").append(year).append(month).append(date).append("_").append(counter).toString();
+		
+		//get the last id
+		final int id=getLastId();
+			
+		pnr = sb.append(src).append(dest).append("_").append(year).append(month).append(date).append("_").append(id).toString();
 		
 		return pnr;
 	}
@@ -141,8 +142,10 @@ public class Ticket {
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");  
 		    String strDate = formatter.format(travelDate);  
 			
-			String query = "insert into TICKET values (?,?,?,?,?,?)";
+			String query = "insert into TICKET(pnr,train_no,train_name,train_source,train_destination,travel_date,no_of_passengers,total_fair) values (?,?,?,?,?,?,?,?)";
 			PreparedStatement pstm = connection.prepareStatement(query);
+			
+			
 			
 			pstm.setString(1, generatePNR());
 			pstm.setInt(2, train.getTrainNo());
@@ -150,7 +153,8 @@ public class Ticket {
 			pstm.setString(4, train.getSource());
 			pstm.setString(5, train.getDestination());
 			pstm.setString(6, strDate);
-			
+			pstm.setInt(7, passengers.size());
+			pstm.setDouble(8, calculateTotalTicketPrice());
 			
 			pstm.executeUpdate();
 			
@@ -162,20 +166,23 @@ public class Ticket {
 		
 	}
 	
-	public void sortPassengersByName() {
-		List<Passenger> list = new ArrayList<>();
-		for(Map.Entry<Passenger,Double> entry : passengers.entrySet()) {
-			list.add(entry.getKey());
+	public int getLastId() {
+		int id=0;
+		
+		try {
+			EstablishConnection ec = new EstablishConnection();
+			Connection connection = ec.getConnection();
+			String query="SELECT * FROM TICKET WHERE id=(SELECT max(id) FROM TICKET)";
+			PreparedStatement pstm = connection.prepareStatement(query);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()) {
+				id=rs.getInt(1);
+			}
+			return id;
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
-		 
-		String[] names = new String[list.size()];
-		int i=0;
-		for(Passenger p : list)
-			names[i++]=p.getName();
-		
-		Arrays.sort(names);
-		
+		return id;
 	}
-	
 	
 }
