@@ -1,0 +1,16 @@
+PNR				:	BD_20221212_104
+TrainNo			:	1001
+Train Name		:	Shatabdi Express
+From			:	Bangalore
+To				:	Delhi
+Travel Date		:	12/12/2022
+
+Passengers:
+---------------------------------------------------------
+Name		Age		Gender		Fair
+---------------------------------------------------------
+Shruti		27		F		625.0
+Arun		26		M		2500.0
+Aditya		22		M		2500.0
+
+Total Price: 5625.0

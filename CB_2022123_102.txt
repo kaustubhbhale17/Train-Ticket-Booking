@@ -1,0 +1,15 @@
+PNR				:	CB_2022123_102
+TrainNo			:	1006
+Train Name		:	Brindavan Express
+From			:	Chennai
+To				:	Bangalore
+Travel Date		:	3/12/2022
+
+Passengers:
+---------------------------------------------------------
+Name		Age		Gender		Fair
+---------------------------------------------------------
+Ronak		45		F		250.0
+Akash		65		M		600.0
+
+Total Price: 850.0

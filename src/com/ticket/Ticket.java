@@ -144,9 +144,7 @@ public class Ticket {
 			
 			String query = "insert into TICKET(pnr,train_no,train_name,train_source,train_destination,travel_date,no_of_passengers,total_fair) values (?,?,?,?,?,?,?,?)";
 			PreparedStatement pstm = connection.prepareStatement(query);
-			
-			
-			
+	
 			pstm.setString(1, generatePNR());
 			pstm.setInt(2, train.getTrainNo());
 			pstm.setString(3, train.getTrainName());
