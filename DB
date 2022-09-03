@@ -1,0 +1,45 @@
+create database coreJavaCaseStudy;
+use coreJavaCaseStudy;
+
+
+CREATE TABLE TRAINS
+( 
+TRAIN_NO INT(5),
+TRAIN_NAME VARCHAR(40),
+SOURCE VARCHAR(20),
+DESTINATION VARCHAR(20),
+TICKET_PRICE DOUBLE,
+primary key (train_no)
+);
+
+
+Insert into TRAINS (TRAIN_NO,TRAIN_NAME,SOURCE,DESTINATION,TICKET_PRICE) values (1001,'Shatabdi Express','Bangalore','Delhi',2500);
+Insert into TRAINS (TRAIN_NO,TRAIN_NAME,SOURCE,DESTINATION,TICKET_PRICE) values (1002,'Shatabdi Express','Delhi','Bangalore',2500);
+Insert into TRAINS (TRAIN_NO,TRAIN_NAME,SOURCE,DESTINATION,TICKET_PRICE) values (1003,'Udyan Express','Bangalore','Mumbai',1500);
+Insert into TRAINS (TRAIN_NO,TRAIN_NAME,SOURCE,DESTINATION,TICKET_PRICE) values (1004,'Udyan Express','Mumbai','Bangalore',1500);
+Insert into TRAINS (TRAIN_NO,TRAIN_NAME,SOURCE,DESTINATION,TICKET_PRICE) values (1005,'Brindavan Express','Bangalore','Chennai',1000);
+Insert into TRAINS (TRAIN_NO,TRAIN_NAME,SOURCE,DESTINATION,TICKET_PRICE) values (1006,'Brindavan Express','Chennai','Bangalore',1000);
+
+
+create  table PASSENGERS(
+name varchar(30),
+age int ,
+gender char
+);
+
+select * from PASSENGERS;
+
+create table TICKET(
+	id int auto_increment,
+	pnr varchar(20),
+    train_no int,
+    train_name varchar(50),
+    train_source varchar(50),
+    train_destination varchar(50),
+    travel_date varchar(10),
+    no_of_passengers int,
+    total_fair double,
+    primary key (id)
+);
+
+alter table TICKET auto_increment =100; 
